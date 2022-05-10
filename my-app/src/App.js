@@ -1,10 +1,17 @@
 import * as React from 'react';
-import './App.css'
+import './App.css';
+import moment from 'moment'
 
 const WEEK_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const LINES = [1, 2, 3, 4, 5, 6]
 
 export default class Calendar extends React.Component {
+
+
+  getMonthDays = () => {
+    console.log(moment().format('YYYY-MM-DD'), 'moment()')
+    return moment().daysInMonth()
+  }
 
   render () {
     return (<div>
@@ -19,27 +26,26 @@ export default class Calendar extends React.Component {
             </div>
           </div>
         </caption>
-        <tr>
+        <tbody>
+          <tr>
+            {
+              WEEK_NAMES.map((week, key) => {
+                return <th key={key}>{week}</th>
+              })
+            }
+          </tr>
           {
-            WEEK_NAMES.map((week, key) => {
-              return <th key={key}>{week}</th>
+            LINES.map((l, key) => {
+              return <tr key={key}>
+                {
+                  WEEK_NAMES.map((week, index) => {
+                    return <td key={index}>{index}</td>
+                  })
+                }
+              </tr>
             })
           }
-        </tr>
-        {
-          LINES.map((l, key) => {
-            return <tr key={key}>
-              {
-                WEEK_NAMES.map((week, index) => {
-                  return <td key={index}>{index}</td>
-                })
-              }
-            </tr>
-          })
-        }
-
-
-
+        </tbody>
       </table>
     </div>)
   }
